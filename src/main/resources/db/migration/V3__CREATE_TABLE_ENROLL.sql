@@ -15,5 +15,6 @@ CREATE TABLE ENROLL (
       FOREIGN KEY (course_id)
       REFERENCES course (id)
       ON DELETE CASCADE
-      ON UPDATE NO ACTION
+      ON UPDATE NO ACTION,
+  CONSTRAINT uk_user_course UNIQUE (user_id, course_id)
 );

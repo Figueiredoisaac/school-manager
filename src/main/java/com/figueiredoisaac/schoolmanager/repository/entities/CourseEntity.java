@@ -16,18 +16,19 @@ public class CourseEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column
+    @Column(nullable = false)
     private String name;
-    @Column(length = 10)
+    @Column(length = 10, nullable = false, unique = true)
     private String code;
-    @ManyToOne
-    @JoinColumn(name = "instructor_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "instructor_id" , nullable = false)
     private UserEntity instructor;
     @Column
     private String description;
-    @Column
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private CourseStatus status;
-    @Column
+    @Column(nullable = false)
     private LocalDateTime createdAt;
     @Column
     private LocalDateTime disabledAt;
@@ -95,8 +96,8 @@ public class CourseEntity implements Serializable {
     public Course toModel() {
         return new Course(
           this.id,
-          this.code,
           this.name,
+          this.code,
           this.instructor.toModel(),
           this.description,
           this.status,

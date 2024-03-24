@@ -8,7 +8,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "ENROLL")
+@Table(name = "ENROLL",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "course_id"}, name = "uk_user_course"))
 public class EnrollEntity implements Serializable {
 
     @Serial
@@ -17,7 +18,7 @@ public class EnrollEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private UserEntity userEntity;
     @ManyToOne
     @JoinColumn(name = "course_id")
@@ -51,12 +52,20 @@ public class EnrollEntity implements Serializable {
         this.enrolledAt = enrolledAt;
     }
 
-    public EnrollEntity from(Enroll enroll){
+    public static EnrollEntity from(Enroll enroll){
         return new EnrollEntity(
                 enroll.getId(),
                 UserEntity.from(enroll.getUser()),
                 CourseEntity.from(enroll.getCourse()),
                 enroll.getEnrolledAt()
+        );
+    }
+    public Enroll toModel(){
+        return new Enroll(
+                this.id,
+                this.userEntity.toModel(),
+                this.courseEntity.toModel(),
+                this.enrolledAt
         );
     }
 }

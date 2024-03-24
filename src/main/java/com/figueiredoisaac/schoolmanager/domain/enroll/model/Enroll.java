@@ -19,6 +19,12 @@ public class Enroll {
         this.enrolledAt = enrolledAt;
     }
 
+    public Enroll(User user, Course course, LocalDateTime enrolledAt) {
+        this.user = user;
+        this.course = course;
+        this.enrolledAt = enrolledAt;
+    }
+
     public Long getId() {
         return id;
     }

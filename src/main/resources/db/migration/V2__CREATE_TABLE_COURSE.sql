@@ -1,7 +1,7 @@
 CREATE TABLE COURSE (
   id INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(45) NULL,
-  code VARCHAR(10) NULL,
+  code VARCHAR(10) NULL UNIQUE,
   instructor_id INT NULL,
   description VARCHAR(150) NULL,
   status VARCHAR(45) NULL,

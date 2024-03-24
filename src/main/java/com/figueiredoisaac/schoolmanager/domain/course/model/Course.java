@@ -2,15 +2,19 @@ package com.figueiredoisaac.schoolmanager.domain.course.model;
 
 import com.figueiredoisaac.schoolmanager.commons.CourseStatus;
 import com.figueiredoisaac.schoolmanager.domain.user.model.User;
+import jakarta.validation.constraints.Pattern;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Course {
+public class Course implements Serializable {
+
 
     private Long id;
 
     private String name;
-
+    @Pattern(regexp = "^[a-z](?:[a-z\\-]*[a-z])?$", message = "Code deve conter apenas caracteres minúsculos e '-' usado como separador ")
     private String code;
 
     private User instructor;
@@ -34,6 +38,16 @@ public class Course {
         this.status = status;
         this.createdAt = createdAt;
         this.disabledAt = disabledAt;
+    }
+
+    public Course(String name, String code, User instructor, String description,
+                  CourseStatus status, LocalDateTime createdAt) {
+        this.name = name;
+        this.code = code;
+        this.instructor = instructor;
+        this.description = description;
+        this.status = status;
+        this.createdAt = createdAt;
     }
 
     public Long getId() {

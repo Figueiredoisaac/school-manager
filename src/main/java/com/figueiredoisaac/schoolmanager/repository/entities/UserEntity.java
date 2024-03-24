@@ -3,6 +3,8 @@ package com.figueiredoisaac.schoolmanager.repository.entities;
 import com.figueiredoisaac.schoolmanager.commons.UserRoles;
 import com.figueiredoisaac.schoolmanager.domain.user.model.User;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -16,17 +18,19 @@ public class UserEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column
+    @Column(nullable = false)
     private String name;
-    @Column(length = 20)
+    @Column(length = 20 , nullable = false, unique = true)
     private String username;
-    @Column
+    @Email
+    @Column(nullable = false, unique = true)
     private String email;
-    @Column
+    @Column(nullable = false)
     private String password;
-    @Column
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private UserRoles role;
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
     public UserEntity() {}
@@ -84,8 +88,8 @@ public class UserEntity implements Serializable {
         return new User(
             this.id,
             this.name,
-            this.email,
             this.username,
+            this.email,
             this.password,
             this.role,
             this.createdAt

@@ -1,17 +1,21 @@
 package com.figueiredoisaac.schoolmanager.domain.user.model;
 
 import com.figueiredoisaac.schoolmanager.commons.UserRoles;
-import jakarta.persistence.Column;
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDateTime;
 
 public class User {
 
     private Long id;
+
     private String name;
 
+
+    @Pattern(regexp = "^[a-z](?:[a-z\\-]*[a-z])?$", message = "Username deve conter apenas caracteres minúsculos e '-' usado como separador ")
     private String username;
 
+    @Email
     private String email;
 
     private String password;
@@ -22,6 +26,15 @@ public class User {
 
     public User(Long id, String name, String username, String email, String password, UserRoles role, LocalDateTime createdAt) {
         this.id = id;
+        this.name = name;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.createdAt = createdAt;
+    }
+
+    public User(String name, String username, String email, String password, UserRoles role, LocalDateTime createdAt) {
         this.name = name;
         this.username = username;
         this.email = email;

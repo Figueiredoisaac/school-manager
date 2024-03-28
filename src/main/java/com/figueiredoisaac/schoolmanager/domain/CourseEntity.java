@@ -1,12 +1,13 @@
-package com.figueiredoisaac.schoolmanager.repository.entities;
+package com.figueiredoisaac.schoolmanager.domain;
 
-import com.figueiredoisaac.schoolmanager.commons.CourseStatus;
-import com.figueiredoisaac.schoolmanager.domain.course.model.Course;
+import com.figueiredoisaac.schoolmanager.domain.enums.CourseStatus;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "course ")
 public class CourseEntity implements Serializable {
@@ -18,10 +19,11 @@ public class CourseEntity implements Serializable {
     private Long id;
     @Column(nullable = false)
     private String name;
+    @Pattern(regexp = "^[a-z](?:[a-z\\-]*[a-z])?$", message = "Code deve conter apenas caracteres minúsculos e '-' usado como separador ")
     @Column(length = 10, nullable = false, unique = true)
     private String code;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "instructor_id" , nullable = false)
+    @JoinColumn(name = "instructor_id", nullable = false)
     private UserEntity instructor;
     @Column
     private String description;
@@ -33,11 +35,11 @@ public class CourseEntity implements Serializable {
     @Column
     private LocalDateTime disabledAt;
 
-    public CourseEntity() {}
+    public CourseEntity() {
+    }
 
-    public CourseEntity(Long id, String name, String code,
-                        UserEntity instructor, String description, CourseStatus status,
-                        LocalDateTime createdAt, LocalDateTime disabledAt) {
+    public CourseEntity(Long id, String name, String code, UserEntity instructor, String description,
+                        CourseStatus status, LocalDateTime createdAt, LocalDateTime disabledAt) {
         this.id = id;
         this.name = name;
         this.code = code;
@@ -80,31 +82,35 @@ public class CourseEntity implements Serializable {
         this.disabledAt = disabledAt;
     }
 
-    public static CourseEntity from(Course course){
-        return new CourseEntity(
-            course.getId(),
-            course.getName(),
-            course.getCode(),
-            UserEntity.from(course.getInstructor()),
-            course.getDescription(),
-            course.getStatus(),
-            course.getCreatedAt(),
-            course.getDisabledAt()
-        );
+    public Long getId() {
+        return id;
     }
 
-    public Course toModel() {
-        return new Course(
-          this.id,
-          this.name,
-          this.code,
-          this.instructor.toModel(),
-          this.description,
-          this.status,
-          this.createdAt,
-          this.disabledAt
-        );
-
+    public String getName() {
+        return name;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public UserEntity getInstructor() {
+        return instructor;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public CourseStatus getStatus() {
+        return status;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getDisabledAt() {
+        return disabledAt;
+    }
 }

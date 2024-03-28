@@ -1,7 +1,6 @@
-package com.figueiredoisaac.schoolmanager.repository.jpa;
+package com.figueiredoisaac.schoolmanager.repository;
 
-import com.figueiredoisaac.schoolmanager.domain.user.model.User;
-import com.figueiredoisaac.schoolmanager.repository.entities.UserEntity;
+import com.figueiredoisaac.schoolmanager.domain.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

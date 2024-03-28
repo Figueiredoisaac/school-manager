@@ -1,7 +1,7 @@
-package com.figueiredoisaac.schoolmanager.repository.jpa;
+package com.figueiredoisaac.schoolmanager.repository;
 
-import com.figueiredoisaac.schoolmanager.commons.CourseStatus;
-import com.figueiredoisaac.schoolmanager.repository.entities.CourseEntity;
+import com.figueiredoisaac.schoolmanager.domain.enums.CourseStatus;
+import com.figueiredoisaac.schoolmanager.domain.CourseEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

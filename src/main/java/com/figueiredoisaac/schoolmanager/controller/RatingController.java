@@ -3,6 +3,7 @@ package com.figueiredoisaac.schoolmanager.controller;
 import com.figueiredoisaac.schoolmanager.domain.dto.RatingDto;
 import com.figueiredoisaac.schoolmanager.domain.dto.RatingDtoNpc;
 import com.figueiredoisaac.schoolmanager.service.RatingService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/v1/rating")
+@Tag(name = "Rating")
 public class RatingController {
 
     @Autowired

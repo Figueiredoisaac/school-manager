@@ -4,6 +4,7 @@ package com.figueiredoisaac.schoolmanager.controller;
 import com.figueiredoisaac.schoolmanager.domain.dto.UserDto;
 import com.figueiredoisaac.schoolmanager.domain.dto.output.UserDtoOutput;
 import com.figueiredoisaac.schoolmanager.service.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/v1/users")
+@Tag(name = "Users")
 public class UserController {
 
     @Autowired

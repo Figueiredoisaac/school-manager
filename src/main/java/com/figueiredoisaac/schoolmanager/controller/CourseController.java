@@ -4,6 +4,7 @@ import com.figueiredoisaac.schoolmanager.domain.enums.CourseStatus;
 import com.figueiredoisaac.schoolmanager.domain.dto.CourseDto;
 import com.figueiredoisaac.schoolmanager.domain.dto.output.CourseDTtoOutput;
 import com.figueiredoisaac.schoolmanager.service.CourseService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +18,7 @@ import static com.figueiredoisaac.schoolmanager.domain.enums.CourseStatus.INATIV
 
 @RestController
 @RequestMapping("/v1/course")
+@Tag(name = "Course")
 public class CourseController {
     @Autowired
     private CourseService courseService;

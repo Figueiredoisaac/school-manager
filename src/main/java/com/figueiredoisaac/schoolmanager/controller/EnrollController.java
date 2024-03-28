@@ -2,6 +2,7 @@ package com.figueiredoisaac.schoolmanager.controller;
 
 import com.figueiredoisaac.schoolmanager.domain.dto.EnrollDto;
 import com.figueiredoisaac.schoolmanager.service.EnrollService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/v1/enroll")
+@Tag(name = "Enroll")
 public class EnrollController {
 
     @Autowired

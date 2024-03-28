@@ -1,5 +1,9 @@
 package com.figueiredoisaac.schoolmanager.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import jakarta.persistence.*;
 
 import java.io.Serial;
@@ -7,8 +11,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "ENROLL",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "course_id"}, name = "uk_user_course"))
+@Table(name = "enroll",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "course_id"}, name = "uk_user_course_enroll"))
 public class EnrollEntity implements Serializable {
 
     @Serial
@@ -20,7 +24,7 @@ public class EnrollEntity implements Serializable {
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
     @ManyToOne
-    @JoinColumn(name = "course_id")
+    @JoinColumn(name = "course_id", nullable = false)
     private CourseEntity course;
     @Column(name = "enrolled_at")
     private LocalDateTime enrolledAt;

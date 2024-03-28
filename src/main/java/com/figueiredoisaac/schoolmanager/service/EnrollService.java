@@ -4,10 +4,7 @@ import com.figueiredoisaac.schoolmanager.domain.CourseEntity;
 import com.figueiredoisaac.schoolmanager.domain.EnrollEntity;
 import com.figueiredoisaac.schoolmanager.domain.UserEntity;
 import com.figueiredoisaac.schoolmanager.domain.enums.CourseStatus;
-import com.figueiredoisaac.schoolmanager.domain.record.CourseRecord;
-import com.figueiredoisaac.schoolmanager.domain.record.EnrollRecord;
-import com.figueiredoisaac.schoolmanager.domain.record.input.EnrollRecordInput;
-import com.figueiredoisaac.schoolmanager.domain.record.output.EnrollRecordOutput;
+import com.figueiredoisaac.schoolmanager.domain.dto.EnrollDto;
 import com.figueiredoisaac.schoolmanager.exception.BadRequestException;
 import com.figueiredoisaac.schoolmanager.exception.NotFoundException;
 import com.figueiredoisaac.schoolmanager.repository.CourseRepository;
@@ -34,16 +31,15 @@ public class EnrollService {
     @Autowired
     ModelMapper modelMapper;
 
-    public EnrollRecordOutput enrollment(EnrollRecordInput enrollRecordInput) {
-        UserEntity user = userRepository.findByUsername(enrollRecordInput.user())
+    public void enrollment(EnrollDto enrollDTO) {
+        UserEntity user = userRepository.findByUsername(enrollDTO.getUser())
                 .orElseThrow(() -> new NotFoundException("Usuário não Encontrado"));
-        CourseEntity course = courseRepository.findByCode(enrollRecordInput.course())
+        CourseEntity course = courseRepository.findByCode(enrollDTO.getCourse())
                 .orElseThrow(() -> new NotFoundException("Curso não Encontrado"));
-        if(course.getStatus()==CourseStatus.INATIVO){
+        if (course.getStatus() == CourseStatus.INATIVO) {
             throw new BadRequestException("Curso não permite matrículas novas");
         }
-
-        return  modelMapper.map(enrollRepository.save(new EnrollEntity(user,course, LocalDateTime.now())), EnrollRecordOutput.class);
+        enrollRepository.save(new EnrollEntity(user,course,LocalDateTime.now()));
     }
 
 

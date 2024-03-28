@@ -3,24 +3,37 @@ package com.figueiredoisaac.schoolmanager.domain;
 import jakarta.persistence.*;
 
 import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "RATING")
-public class RatingEntity {
+@Table(name = "rating",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "course_id"}, name = "uk_user_course_rating"))
+public class RatingEntity implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Integer rating;
+    @Column(name = "rating", nullable = false)
+    private Long rating;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "course_id", nullable = false)
     private CourseEntity course;
+    @Column(name = "description", nullable = false)
     private String description;
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    public RatingEntity(Long id, Integer rating, UserEntity user, CourseEntity course, String description, LocalDateTime createdAt) {
+    public RatingEntity() {
+    }
+
+    public RatingEntity(Long id, Long rating, UserEntity user,
+                        CourseEntity course, String description, LocalDateTime createdAt) {
         this.id = id;
         this.rating = rating;
         this.user = user;
@@ -28,8 +41,8 @@ public class RatingEntity {
         this.description = description;
         this.createdAt = createdAt;
     }
-
-    public RatingEntity() {
+    public UserEntity getUser() {
+        return user;
     }
 
     public Long getId() {
@@ -40,17 +53,14 @@ public class RatingEntity {
         this.id = id;
     }
 
-    public Integer getRating() {
+    public Long getRating() {
         return rating;
     }
 
-    public void setRating(Integer rating) {
+    public void setRating(Long rating) {
         this.rating = rating;
     }
 
-    public UserEntity getUser() {
-        return user;
-    }
 
     public void setUser(UserEntity user) {
         this.user = user;

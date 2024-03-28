@@ -1,7 +1,6 @@
 package com.figueiredoisaac.schoolmanager.controller;
 
-import com.figueiredoisaac.schoolmanager.domain.record.input.EnrollRecordInput;
-import com.figueiredoisaac.schoolmanager.domain.record.output.EnrollRecordOutput;
+import com.figueiredoisaac.schoolmanager.domain.dto.EnrollDto;
 import com.figueiredoisaac.schoolmanager.service.EnrollService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +20,12 @@ public class EnrollController {
 
 
     @PostMapping(value = "/new")
-    public ResponseEntity<EnrollRecordOutput> enrollment(
-            @Valid @RequestBody EnrollRecordInput input
+    public ResponseEntity<String> enrollment(
+            @Valid @RequestBody EnrollDto input
     ) throws Exception {
-
-        return new ResponseEntity<>(
-                enrollService.enrollment(input),
+            enrollService.enrollment(input);
+        return new ResponseEntity<>("Matriculado com sucesso!"
+                ,
                 HttpStatus.OK
         );
     }

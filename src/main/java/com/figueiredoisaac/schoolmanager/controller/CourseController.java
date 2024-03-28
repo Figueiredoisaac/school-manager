@@ -1,13 +1,13 @@
 package com.figueiredoisaac.schoolmanager.controller;
 
 import com.figueiredoisaac.schoolmanager.domain.enums.CourseStatus;
-import com.figueiredoisaac.schoolmanager.domain.record.input.CourseRecordInput;
-import com.figueiredoisaac.schoolmanager.domain.record.output.CourseRecordOutput;
+import com.figueiredoisaac.schoolmanager.domain.dto.CourseDto;
+import com.figueiredoisaac.schoolmanager.domain.dto.output.CourseDTtoOutput;
 import com.figueiredoisaac.schoolmanager.service.CourseService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,20 +22,21 @@ public class CourseController {
     private CourseService courseService;
 
     @GetMapping(value = "/search")
-    public ResponseEntity<Page<CourseRecordOutput>> findAllByStatus(
+    public ResponseEntity<Page<CourseDTtoOutput>> findAllByStatus(
             @RequestParam(name = "status", required = false) CourseStatus status,
-            @RequestParam(name = "p") Integer page
+            Pageable page
+
     ) throws Exception {
         if (status == ATIVO || status == INATIVO) {
-            return new ResponseEntity<>(courseService.findAllByStatus(status, PageRequest.of(page - 1, 10)), HttpStatus.OK);
+            return new ResponseEntity<>(courseService.findAllByStatus(status, page), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(courseService.findAll(PageRequest.of(page - 1, 10)), HttpStatus.OK);
+            return new ResponseEntity<>(courseService.findAll(page), HttpStatus.OK);
         }
     }
 
     @PostMapping(value = "/register")
     public ResponseEntity<String> create(
-            @Valid @RequestBody CourseRecordInput input
+            @Valid @RequestBody CourseDto input
     ) throws Exception {
         courseService.create(input);
 

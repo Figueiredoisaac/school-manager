@@ -1,9 +1,8 @@
 package com.figueiredoisaac.schoolmanager.controller;
 
 
-import com.figueiredoisaac.schoolmanager.domain.record.UserRecord;
-import com.figueiredoisaac.schoolmanager.domain.record.input.UserRecordInput;
-import com.figueiredoisaac.schoolmanager.domain.record.output.UserRecordOutput;
+import com.figueiredoisaac.schoolmanager.domain.dto.UserDto;
+import com.figueiredoisaac.schoolmanager.domain.dto.output.UserDtoOutput;
 import com.figueiredoisaac.schoolmanager.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +20,9 @@ public class UserController {
 
 
     @GetMapping(value = "/{username}")
-    public ResponseEntity<UserRecordOutput> findByUsername(
+    public ResponseEntity<UserDtoOutput> findByUsername(
             @PathVariable("username") String username
-    ) throws Exception
-    {
+    ) throws Exception {
         return new ResponseEntity(
                 userService.findByUsername(username),
                 HttpStatus.OK);
@@ -33,13 +31,13 @@ public class UserController {
 
     @PostMapping(value = "/register")
     public ResponseEntity<String> create(
-            @Valid @RequestBody UserRecordInput input
+            @Valid @RequestBody UserDto input
     ) throws Exception {
         userService.create(input);
         return new
                 ResponseEntity<>(
-                        "Usuário Cadastrado com Sucesso",
-                        HttpStatus.CREATED
+                "Usuário Cadastrado com Sucesso",
+                HttpStatus.CREATED
         );
     }
 }

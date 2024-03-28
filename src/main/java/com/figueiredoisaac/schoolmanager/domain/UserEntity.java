@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "USERS")
+@Table(name = "users")
 public class UserEntity implements Serializable {
 
     @Serial
@@ -35,37 +35,6 @@ public class UserEntity implements Serializable {
     private LocalDateTime createdAt;
 
     public UserEntity() {
-    }
-
-    public UserEntity(Long id, String name, String username, String email, String password,
-                      UserRoles role, LocalDateTime createdAt) {
-        this.id = id;
-        this.name = name;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-        this.createdAt = createdAt;
-    }
-    public UserEntity(String name, String username, String email, String password,
-                      UserRoles role, LocalDateTime createdAt) {
-
-        this.name = name;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-        this.createdAt = createdAt;
-    }
-    public UserEntity(String name, String username, String email, String password,
-                      UserRoles role) {
-
-        this.name = name;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-        this.createdAt = LocalDateTime.now();
     }
 
     public void setName(String name) {

@@ -51,32 +51,27 @@ public class CourseService {
                 .orElseThrow(() -> new NotFoundException("Curso não Encontrado")), CourseDTtoOutput.class);
     }
 
-    public Page<CourseDTtoOutput> findAllByStatus(CourseStatus status, Pageable page) {
-        Pageable response = createPageRequestUsing(page.getPageNumber(), page.getPageSize());
+    public Page<CourseDTtoOutput> findAllByStatus(CourseStatus status, Integer page) {
+        Pageable response = createPageRequestUsing(page,"id");
 
-        List<CourseDTtoOutput> list = courseRepository.findAllByStatus(status,Sort.by(Sort.Direction.ASC,"id"))
-                .stream().map(courseEntity -> modelMapper.map(courseEntity, CourseDTtoOutput.class))
+        Page<CourseEntity> list = courseRepository.findAllByStatus(status, response);
+        List<CourseDTtoOutput> content = list
+                .stream()
+                .map(courseEntity -> modelMapper.map(courseEntity, CourseDTtoOutput.class))
                 .toList();
 
-        int start = (int) response.getOffset();
-        int end = Math.min((start + response.getPageSize()), list.size());
-
-        List<CourseDTtoOutput> content = list.subList(start, end);
-        return new PageImpl<>(content, response, list.size());
+        return new PageImpl<>(content, response, list.getTotalElements());
     }
 
-    public Page<CourseDTtoOutput> findAll(Pageable page) {
-        Pageable response = createPageRequestUsing(page.getPageNumber(), page.getPageSize());
+    public Page<CourseDTtoOutput> findAll(Integer page) {
+        Pageable response = createPageRequestUsing(page, "id");
 
-        List<CourseDTtoOutput> list = courseRepository.findAll(Sort.by(Sort.Direction.ASC,"id"))
+        Page<CourseEntity> list = courseRepository.findAll(response);
+        List<CourseDTtoOutput> content = list
                 .stream().map(courseEntity -> modelMapper.map(courseEntity, CourseDTtoOutput.class))
                 .toList();
 
-        int start = (int) response.getOffset();
-        int end = Math.min((start + response.getPageSize()), list.size());
-
-        List<CourseDTtoOutput> content = list.subList(start, end);
-        return new PageImpl<>(content, response, list.size());
+        return new PageImpl<>(content, response, list.getTotalElements());
     }
 
     public CourseStatus changeStatus(String code, Boolean active) {
@@ -99,7 +94,7 @@ public class CourseService {
         }
     }
 
-    private Pageable createPageRequestUsing(int page, int size) {
-        return PageRequest.of(page, size);
+    private Pageable createPageRequestUsing(Integer page, String proprieties) {
+        return PageRequest.of((page-1), 30, Sort.Direction.DESC, proprieties);
     }
 }

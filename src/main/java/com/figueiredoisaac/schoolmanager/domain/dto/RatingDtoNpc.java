@@ -6,15 +6,17 @@ public class RatingDtoNpc {
 
     Long course_id;
     Double nps;
+    Long enroll_count;
     String code;
     String course_name;
 
     public RatingDtoNpc() {
     }
 
-    public RatingDtoNpc(Long course_id, Double nps, String code, String course_name) {
+    public RatingDtoNpc(Long course_id, Double nps, Long enroll_count, String code, String course_name) {
         this.course_id = course_id;
         this.nps = nps;
+        this.enroll_count = enroll_count;
         this.code = code;
         this.course_name = course_name;
     }
@@ -35,6 +37,12 @@ public class RatingDtoNpc {
         this.nps = nps;
     }
 
+    public Long getEnroll_count() {
+        return enroll_count;
+    }
+    public void setEnroll_count(Long enroll_count) {
+        this.enroll_count = enroll_count;
+    }
     public String getCode() {
         return code;
     }

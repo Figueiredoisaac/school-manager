@@ -26,7 +26,7 @@ public class CourseController {
     @GetMapping(value = "/search")
     public ResponseEntity<Page<CourseDTtoOutput>> findAllByStatus(
             @RequestParam(name = "status", required = false) CourseStatus status,
-            Pageable page
+            Integer page
 
     ) throws Exception {
         if (status == ATIVO || status == INATIVO) {

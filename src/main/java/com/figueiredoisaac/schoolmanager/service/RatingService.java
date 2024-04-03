@@ -10,12 +10,13 @@ import com.figueiredoisaac.schoolmanager.domain.dto.output.RatingDtoNpcOutput;
 import com.figueiredoisaac.schoolmanager.exception.BadRequestException;
 import com.figueiredoisaac.schoolmanager.exception.NotFoundException;
 import com.figueiredoisaac.schoolmanager.repository.CourseRepository;
+import com.figueiredoisaac.schoolmanager.repository.EnrollRepository;
 import com.figueiredoisaac.schoolmanager.repository.RatingRepository;
 import com.figueiredoisaac.schoolmanager.repository.UserRepository;
 import com.figueiredoisaac.schoolmanager.service.sender.EmailSender;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,6 +32,8 @@ public class RatingService {
     CourseRepository courseRepository;
     @Autowired
     RatingRepository ratingRepository;
+    @Autowired
+    EnrollRepository enrollRepository;
     @Autowired
     ModelMapper modelMapper;
 
@@ -64,12 +67,15 @@ public class RatingService {
         }
     }
 
-    public List<RatingDtoNpc> npcReport() {
-
-        List<RatingDtoNpc> list = ratingRepository.calculateNpsByCourse(Sort.by(Sort.Direction.DESC, "nps"));
-
-        return list;
+    public Page<RatingDtoNpc> npcReport(Integer page) {
+        Pageable response = createPageRequestUsing(page, "nps");
+        Page<RatingDtoNpc> list = ratingRepository.calculateNpsByCourse(response);
+        List<RatingDtoNpc> content = list.filter(rating -> rating.getEnroll_count() > 4).toList();
+        return new PageImpl<>(content, response, list.getTotalElements());
     }
 
 
+    private Pageable createPageRequestUsing(Integer page, String proprieties) {
+        return PageRequest.of((page-1), 30, Sort.Direction.DESC, proprieties);
+    }
 }

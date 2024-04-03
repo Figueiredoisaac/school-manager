@@ -27,10 +27,16 @@ O projeto está estruturado em módulos que incluem:
 O projeto utiliza o MySQL como banco de dados. Certifique-se de configurar corretamente as credenciais de acesso ao banco de dados no arquivo application.properties ou application.yml.
 
 **Execução do Projeto:**
-1. Clone o repositório do projeto em sua máquina local.
-2. Importe o projeto em sua IDE preferida.
-3. Configure o banco de dados conforme necessário.
-4. Execute a aplicação Spring Boot.
+  1. Clone o repositório do projeto em sua máquina local.
+  2. Importe o projeto em sua IDE preferida.
+  3. Configure o banco de dados conforme necessário.
+  4. Execute a aplicação Spring Boot.
+
+**NEW**
+**Execução com Docker:**
+  1. Certifique-se de ter o Docker instalado e em execução em sua máquina.
+  2. No terminal, navegue até o diretório raiz do projeto.
+  3. Construa a imagem Docker usando o comando: docker compose up -d --build .
 
 **Documentação da API:**
 A documentação da API pode ser acessada através do Swagger UI:
